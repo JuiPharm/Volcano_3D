@@ -1,35 +1,23 @@
-# VOLCANO — The Living Earth 🌋
+# Every Joule — Volcano
 
-Interactive Science Book about volcanoes, inspired by the instructional approach of [Every Joule](https://iamtechartist.com/every-joule/) (Predict → Test → Prove). This project uses **original code and diagrams**; it does not copy the Every Joule code or assets.
+An interactive 3D physics book about volcanoes, in Thai. Explore a cutaway volcano, run a controlled eruption experiment, and follow the energy ledger from stored energy to heat, motion and fracture work.
 
-## Live site
+## Modes
 
-https://juipharm.github.io/Volcano_3D/
+- **Explore:** rotate and zoom the 3D stratovolcano, open the internal section, and inspect the magma chamber, conduit, crater and lava flow.
+- **Simulation:** adjust initial energy, magma temperature, illustrative gas fraction and relative viscosity; start, pause, reset and compare two presets.
+- **Learning:** four guided chapters with scene-linked views and questions with feedback.
 
-## Features
+## Run locally
 
-- Five Thai/English learning chapters, each with a self-check question
-- Rotatable and zoomable software-rendered 3D volcano, interactive cutaway and labels
-- Eruption experiment: viscosity, dissolved gases, pressure and presets
-- Animated ash and lava, pause/step/reset controls
-- Saved learning progress with localStorage where browser storage is available
-- One **index.html** file; no external libraries, WebGL, CDN, compilation or build step
-- Responsive layout for phones, tablets and desktops
+Run `node server.cjs`, then open http://127.0.0.1:4173. Serve over HTTP because JavaScript modules do not work reliably from `file://`. No npm install or build is required. The 3D scene loads Three.js 0.164.1 from jsDelivr and requires internet access; the energy model and lessons continue to work if the 3D import fails.
 
-## Running
+## Model limits
 
-Open `index.html` in a modern browser. GitHub Pages deploys automatically from the repository configuration. Internet connectivity is not required for the model itself.
+The simulation is an illustrative teaching model, not a calibrated geophysical model, eruption forecast or VEI calculation. Initial energy is an assumed available reservoir, not the volcano's total thermal energy. The energy ledger is closed: `E₀ = E_stored + Q + E_kinetic + W`. At each time step, released energy is partitioned among heat, kinetic energy and fracture/sound work. Rate and partition coefficients are chosen for teaching comparisons, not based on measured values. Temperature and viscosity can be changed independently. Particle trails are visual illustrations and do not solve fluid dynamics.
 
-## Limits
+The [previous standalone Volcano experience](./volcano-legacy.html) remains available for its offline software-rendered 3D model, five-chapter learning flow, and saved progress.
 
-The eruption simulation is a **qualitative educational illustration**, not a geophysical calculation or disaster prediction. Physical parameters do not report measured magnitudes or actual Volcanic Explosivity Index (VEI).
+## Validation
 
-## Quality checks
-
-`node scripts/check-index.mjs` validates inline JavaScript, required controls, five chapters, and no external dependencies. GitHub Actions runs this on push/PR. Browser interaction smoke tests were completed locally in Chromium at 1440px desktop and 390px mobile sizes.
-
-## Scientific background
-
-- [USGS: How Do Volcanoes Erupt?](https://www.usgs.gov/faqs/how-do-volcanoes-erupt)
-- [USGS: Eruption Styles](https://volcanoes.usgs.gov/volcanic_ash/eruption_styles.html)
-- [USGS: Volcanoes! Lesson 1](https://pubs.usgs.gov/gip/70043848/lesson-1.pdf)
+Run `node scripts/check-index.mjs` and `node --test physics.test.cjs`. GitHub Actions runs both checks on pushes and pull requests.

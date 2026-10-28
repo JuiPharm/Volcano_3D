@@ -1,4 +1,4 @@
-name: Validate Volcano 3D
+name: Validate Every Joule
 on:
   push:
   pull_request:
@@ -11,5 +11,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - name: Check HTML, import map and JavaScript syntax
+      - name: Check app structure and JavaScript syntax
         run: node scripts/check-index.mjs
+      - name: Check energy model
+        run: node --test physics.test.cjs
